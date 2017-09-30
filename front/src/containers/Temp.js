@@ -15,8 +15,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const TempContainer = ({GPTemp, CPTemp, setProcessorTemp})=> {
-
-
   return (
     <Temp
       GPTemp={GPTemp}

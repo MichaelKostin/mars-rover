@@ -4,7 +4,7 @@
     "static": "../front/build"
   },
   "production": {
-    "port": 80,
-    "static": "../front/build"
+    "port": 8080,
+    "static": "./static"
   }
 }

@@ -4,8 +4,8 @@ import logger from '../middlewares/logger';
 import roverApp from '../reducers';
 import createSocketIoMiddleware from 'redux-socket.io';
 import io from 'socket.io-client';
-let socket = io('http://localhost:8080');
-let socketIoMiddleware = createSocketIoMiddleware(socket, "SOCKET:");
+let socket = io('http://192.168.1.6:8080');
+let socketIoMiddleware = createSocketIoMiddleware(socket, 'SOCKET:');
 
 export default function(preloadedState) {
   return createStore(
