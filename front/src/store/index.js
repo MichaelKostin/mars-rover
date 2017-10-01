@@ -5,7 +5,7 @@ import roverApp from '../reducers';
 import createSocketIoMiddleware from 'redux-socket.io';
 import io from 'socket.io-client';
 let socket = io('http://192.168.1.6:8080');
-let socketIoMiddleware = createSocketIoMiddleware(socket, 'SOCKET:');
+let socketIoMiddleware = createSocketIoMiddleware(socket, 'S_');
 
 export default function(preloadedState) {
   return createStore(

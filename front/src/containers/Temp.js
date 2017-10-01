@@ -4,7 +4,6 @@ import Temp from '../components/Temp';
 import { setProcessorTemp } from '../actions';
 
 const mapStateToProps = (state) => ({
-  GPTemp: state.GPTemp,
   CPTemp: state.CPTemp
 });
 
@@ -14,10 +13,9 @@ const mapDispatchToProps = (dispatch) => ({
     }
 });
 
-const TempContainer = ({GPTemp, CPTemp, setProcessorTemp})=> {
+const TempContainer = ({ CPTemp, setProcessorTemp })=> {
   return (
     <Temp
-      GPTemp={GPTemp}
       CPTemp={CPTemp}
       setCPTemp={setProcessorTemp}
     />

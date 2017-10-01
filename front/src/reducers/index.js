@@ -1,8 +1,8 @@
 import {
   CHANGE_TEMP_CP,
-  CHANGE_TEMP_GP,
-  SET_TOWER_HORIZON,
-  SET_TOWER_VERTICAL
+  S_SET_TOWER_X,
+  S_SET_TOWER_Y,
+  S_TOWER_CTR
 } from '../actions';
 
 function roverApp(state = {}, action) {
@@ -11,17 +11,17 @@ function roverApp(state = {}, action) {
       return Object.assign({}, state, {
         CPTemp: action.temp
       });
-    case CHANGE_TEMP_GP:
+    case S_SET_TOWER_X:
       return Object.assign({}, state, {
-        GPTemp: action.temp
+        towerX: action.degree
       });
-    case SET_TOWER_HORIZON:
+    case S_SET_TOWER_Y:
       return Object.assign({}, state, {
-        towerHorizon: action.degree
+        towerY: action.degree
       });
-    case SET_TOWER_VERTICAL:
+    case S_TOWER_CTR:
       return Object.assign({}, state, {
-        towerVertical: action.degree
+        towerEnabled: action.enabled
       });
     default:
       return state;

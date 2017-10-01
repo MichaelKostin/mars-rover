@@ -6,7 +6,6 @@ class Temp extends Component {
     return (
       <div className="temp">
        <p>CP temp: <strong>{this.props.CPTemp}</strong> C</p>
-        <p>GP temp: <strong>{this.props.GPTemp}</strong> C</p>
       </div>
     );
   }
@@ -14,7 +13,6 @@ class Temp extends Component {
 
 Temp.propTypes = {
   CPTemp: PropTypes.number,
-  GPTemp: PropTypes.number,
   setCPTemp: PropTypes.func
 };
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Temp from '../../containers/Temp';
+import Tower from '../../containers/Tower';
 import logo from './logo.svg';
 import './App.css';
 
@@ -15,6 +16,7 @@ class App extends Component {
           <p>NODE_ENV: {env}</p>
         </div>
         <Temp/>
+        <Tower/>
       </div>
     );
   }

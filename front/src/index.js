@@ -6,18 +6,11 @@ import { Provider } from 'react-redux';
 import configureStore from './store';
 
 let store = configureStore({
-  GPTemp: 60,
+  towerEnabled: false,
   CPTemp: 16,
-  towerHorizon: 90,
-  towerVertical: 90
+  towerX: 90,
+  towerY: 90
 });
-
-setInterval(() => {
-  store.dispatch({
-    type: 'SOCKET:HELLO',
-    data: 'hello from front'
-  })
-}, 3000);
 
 ReactDOM.render(
   <Provider store={store}>
