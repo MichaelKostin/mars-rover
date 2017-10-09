@@ -30,20 +30,18 @@ io.on('connection', function (socket) {
     }
   });
 
-  socket.on('action', function (event) {
-    console.log(event);
-    switch (event.type) {
-      case 'S_SET_TOWER_X':
-        towerService.changePositionX(event.degree);
-        break;
-      case 'S_SET_TOWER_Y':
-        towerService.changePositionY(event.degree);
+  socket.on('action', function (action) {
+    switch (action.type) {
+      case 'S_T_XY':
+        towerService.changePositionX(action.x);
+        towerService.changePositionY(action.y);
+       // socket.emit('action', { type: `||||||:${action.type}`, degree: action.degree });
         break;
       case 'S_TOWER_CTR':
         towerService.stopServos();
         break;
       default:
-        console.error('Unhandled event: ', event);
+        console.error('Unhandled event: ', action);
     }
   });
 

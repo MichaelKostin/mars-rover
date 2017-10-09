@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Tower from '../components/Tower';
-import { setTowerX, setTowerY, toggleTowerControl } from '../actions';
+import { toggleTowerControl, setTowerPosition } from '../actions';
 
 const mapStateToProps = (state) => ({
   towerX: state.towerX,
@@ -10,20 +10,18 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setTowerX: (degree) => dispatch(setTowerX(degree)),
-  setTowerY: (degree) => dispatch(setTowerY(degree)),
-  toggleTowerControl: (enabled) => dispatch(toggleTowerControl(enabled))
+  toggleTowerControl: (enabled) => dispatch(toggleTowerControl(enabled)),
+  setTowerPosition: (x, y) => dispatch(setTowerPosition(x, y))
 });
 
-const TowerContainer = ({towerX, towerY, towerEnabled, setTowerX, setTowerY, toggleTowerControl})=> {
+const TowerContainer = ({ towerX,  towerY, towerEnabled, toggleTowerControl, setTowerPosition })=> {
   return (
     <Tower
       towerEnabled={towerEnabled}
       towerX={towerX}
       towerY={towerY}
-      setTowerX={setTowerX}
-      setTowerY={setTowerY}
       toggleTowerControl={toggleTowerControl}
+      setTowerPosition={setTowerPosition}
     />
   )
 };

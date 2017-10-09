@@ -7,7 +7,7 @@ import './App.css';
 const env = process.env.NODE_ENV;
 
 class App extends Component {
-  render() {
+  static render() {
     return (
       <div className="App">
         <div className="App-header">
@@ -15,6 +15,7 @@ class App extends Component {
           <h2>Welcome to rover UI</h2>
           <p>NODE_ENV: {env}</p>
         </div>
+        <img id="mjpeg_dest" alt="main cam" src="http://192.168.1.4/html/cam_pic_new.php?time=1507405579786&amp;pDelay=40000"/>
         <Temp/>
         <Tower/>
       </div>

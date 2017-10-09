@@ -3,6 +3,9 @@ const five = require('johnny-five');
 let xServo;
 let yServo;
 
+let currentX = null;
+let currentY = null;
+
 module.exports = {
   changePositionX,
   changePositionY,
@@ -27,11 +30,21 @@ board.on('exit', () => {
 });
 
 function changePositionY(y) {
+  if (currentY === y) {
+    return;
+  }
+
   yServo.to(y);
+  currentY = y;
 }
 
 function changePositionX(x) {
+  if (currentX === x) {
+    return;
+  }
+
   xServo.to(x);
+  currentX = x;
 }
 
 function stopServos() {
