@@ -1,7 +1,8 @@
 import {
   CHANGE_TEMP_CP,
   S_TOWER_CTR,
-  S_T_XY
+  S_T_XY,
+  D_ANY
 } from '../actions';
 
 function roverApp(state = {}, action) {
@@ -19,6 +20,8 @@ function roverApp(state = {}, action) {
         towerX: action.x,
         towerY: action.y
       });
+    case D_ANY:
+      return Object.assign({}, state, { anyData: action.data });
     default:
       return state;
   }

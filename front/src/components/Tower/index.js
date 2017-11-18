@@ -9,7 +9,7 @@ class Tower extends Component {
     super(props);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.keyDown = this.keyDown.bind(this);
-    this.throttledMouseMove = throttle(this.onMouseMove, 20);
+    this.throttledMouseMove = throttle(this.onMouseMove, 10);
     this.setTowerPosition = throttle(this.props.setTowerPosition, 30);
 
     this.state = {
@@ -32,7 +32,7 @@ class Tower extends Component {
     const towerY = Math.floor(event.clientY * 10 / this.state.windowHeight * 18);
 
     if (towerX !== this.props.towerX || towerY !== this.props.towerY) {
-      this.setTowerPosition(towerX, towerY);
+      this.props.setTowerPosition(towerX, towerY);
     }
   }
 
