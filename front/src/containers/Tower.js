@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Tower from '../components/Tower';
-import { toggleTowerControl, setTowerPosition } from '../actions';
+import { toggleTowerControl, setTowerPosition, changeMotors } from '../actions';
 
 const mapStateToProps = (state) => ({
   towerX: state.towerX,
@@ -11,10 +11,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   toggleTowerControl: (enabled) => dispatch(toggleTowerControl(enabled)),
-  setTowerPosition: (x, y) => dispatch(setTowerPosition(x, y))
+  setTowerPosition: (x, y) => dispatch(setTowerPosition(x, y)),
+  changeMotors: (left, right) => dispatch(changeMotors(left, right))
 });
 
-const TowerContainer = ({ towerX,  towerY, towerEnabled, toggleTowerControl, setTowerPosition })=> {
+const TowerContainer = ({ towerX,  towerY, towerEnabled, toggleTowerControl, setTowerPosition, changeMotors })=> {
   return (
     <Tower
       towerEnabled={towerEnabled}
@@ -22,6 +23,7 @@ const TowerContainer = ({ towerX,  towerY, towerEnabled, toggleTowerControl, set
       towerY={towerY}
       toggleTowerControl={toggleTowerControl}
       setTowerPosition={setTowerPosition}
+      changeMotors={changeMotors}
     />
   )
 };

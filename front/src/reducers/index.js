@@ -2,7 +2,8 @@ import {
   CHANGE_TEMP_CP,
   S_TOWER_CTR,
   S_T_XY,
-  D_ANY
+  D_ANY,
+  S_CHANGE_MOTORS
 } from '../actions';
 
 function roverApp(state = {}, action) {
@@ -22,6 +23,8 @@ function roverApp(state = {}, action) {
       });
     case D_ANY:
       return Object.assign({}, state, { anyData: action.data });
+    case S_CHANGE_MOTORS:
+      return Object.assign({}, state, { leftMotors: action.left, rightMotors: action.right});
     default:
       return state;
   }

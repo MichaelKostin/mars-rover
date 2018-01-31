@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import roverApp from '../reducers';
 import createSocketIoMiddleware from 'redux-socket.io';
 import io from 'socket.io-client';
-let socket = io('http://192.168.1.2:8080');
+let socket = io('http://192.168.1.6:8080');
 let socketIoMiddleware = createSocketIoMiddleware(socket, 'S_');
 
 function configureStore(preloadedState) {
@@ -25,7 +25,9 @@ const store = configureStore({
   towerEnabled: false,
   CPTemp: 16,
   towerX: 90,
-  towerY: 90
+  towerY: 90,
+  leftMotors: 0,
+  rightMotors: 0
 });
 
 export default store;
