@@ -13,7 +13,7 @@ class App extends Component {
            [ {store.anyData}]
           </div>
           <div className="video-box">
-            <img id="mjpeg_dest" alt="main cam" src="http://192.168.1.3/html/cam_pic_new.php?time=1507405579786&amp;pDelay=40000"/>
+            <img id="mjpeg_dest" alt="main cam" src="http://192.168.1.6/html/cam_pic_new.php?time=1507405579786&amp;pDelay=40000"/>
           </div>
           <div className="right-box"></div>
         </div>

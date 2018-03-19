@@ -1,6 +1,6 @@
 .main-screen {
   display: flex;
-  margin: 100px 20px; }
+  margin: 20px; }
   .main-screen .left-box,
   .main-screen .right-box,
   .main-screen .video-box {

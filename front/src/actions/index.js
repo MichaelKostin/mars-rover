@@ -3,6 +3,7 @@ export const S_TOWER_CTR = 'S_TOWER_CTR';
 export const S_T_XY = 'S_T_XY';
 export const D_ANY = 'D_ANY';
 export const S_CHANGE_MOTORS = 'S_CHANGE_MOTORS';
+export const S_CHANGE_DIR = 'S_CHANGE_DIR';
 
 //actions
 export function setProcessorTemp(temp) {
@@ -22,4 +23,8 @@ export function setTowerPosition(x, y) {
 
 export function changeMotors(left, right) {
   return { type: S_CHANGE_MOTORS, left, right};
+}
+
+export function changeDirection(direction) {
+  return { type: S_CHANGE_DIR, direction }
 }

@@ -21,7 +21,8 @@ board.on('ready', () => {
 
   yServo = new five.Servo({
     controller: 'PCA9685',
-    pin: 1
+    pin: 1,
+    invert: true
   });
 });
 

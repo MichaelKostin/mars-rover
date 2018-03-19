@@ -8,6 +8,10 @@ const CODE_LEFT = 65;
 const CODE_RIGHT = 68;
 const CODE_BACK = 83;
 const CODE_STOP = 32;
+const CODE_SHIFT = 16;
+const DIR_LEFT = 1;
+const DIR_RIGHT = 2;
+const DIR_STRAIGHT = 0;
 
 class Tower extends Component {
   constructor(props) {
@@ -17,11 +21,21 @@ class Tower extends Component {
     this.keyUp = this.keyUp.bind(this);
     this.throttledMouseMove = throttle(this.onMouseMove, 10);
     this.setTowerPosition = throttle(this.props.setTowerPosition, 30);
+    this.updateMotorsButtons = this.updateMotorsButtons.bind(this);
+    this.updateMotor = this.updateMotor.bind(this);
+    this.updateDirection = this.updateDirection.bind(this);
 
     this.state = {
       windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
-      pressedKeys: []
+      windowHeight: window.innerHeight
+    };
+
+    this.motorButtons = {};
+    this.motor = {
+      left: 0,
+      right: 0,
+      shift: false,
+      direction: DIR_STRAIGHT
     }
   }
 
@@ -45,40 +59,85 @@ class Tower extends Component {
   }
 
   keyDown(event) {
-    switch (event.keyCode) {
-      case CODE_B:
-        this.props.toggleTowerControl(!this.props.towerEnabled);
-        break;
+    if (event.keyCode === CODE_B) {
+      this.props.toggleTowerControl(!this.props.towerEnabled);
+      return;
+    }
+
+    this.updateMotorsButtons(event.keyCode, true);
+    this.updateMotor();
+    this.updateDirection();
+  }
+
+  keyUp(event) {
+    this.updateMotorsButtons(event.keyCode, false);
+    this.updateMotor();
+    this.updateDirection();
+  }
+
+  updateDirection() {
+    let newDirection = null;
+
+    if (this.motorButtons[CODE_LEFT]) {
+      newDirection = DIR_LEFT;
+    } else if (this.motorButtons[CODE_RIGHT]) {
+      newDirection = DIR_RIGHT;
+    } else if (this.motor.direction !== DIR_STRAIGHT) {
+      newDirection = DIR_STRAIGHT;
+    }
+
+    if (newDirection !== null && newDirection !== this.motor.direction) {
+      this.motor.direction = newDirection;
+      this.props.changeDirection(this.motor.direction);
+    }
+  }
+
+  updateMotorsButtons(keyCode, status) {
+
+    switch (keyCode) {
       case CODE_FORWARD:
-        this.props.changeMotors(150, 150);
+        this.motorButtons[CODE_FORWARD] = status;
         break;
       case CODE_BACK:
-        this.props.changeMotors(-150, -150);
+        this.motorButtons[CODE_BACK] = status;
         break;
       case CODE_LEFT:
-        this.props.changeMotors(50, -50);
+        this.motorButtons[CODE_LEFT] = status;
         break;
       case CODE_RIGHT:
-        this.props.changeMotors(-50, 50);
+        this.motorButtons[CODE_RIGHT] = status;
+        break;
+      case CODE_SHIFT:
+        this.motorButtons[CODE_SHIFT] = status;
         break;
       case CODE_STOP:
-        this.props.changeMotors(0, 0);
+        this.motorButtons[CODE_STOP] = status;
         break;
       default:
         return;
     }
-
-    //this.setState({ pressedKeys: this.state.pressedKeys.push(event.keyCode)});
-  }
-
-  keyUp(event) {
-    //this.setState({ pressedKeys: this.state.pressedKeys.filter(item => item !== event.keyCode)});
   }
 
   componentWillUnmount() {
     window.removeEventListener('mousemove', this.throttledMouseMove);
     window.removeEventListener('keydown', this.keyDown);
     window.removeEventListener('keyup', this.keyUp);
+  }
+
+  updateMotor() {
+    let newValue = null;
+    if (this.motorButtons[CODE_FORWARD]) {
+       newValue = this.motorButtons[CODE_SHIFT] ? 255 : 150;
+    } else if (this.motorButtons[CODE_BACK]) {
+       newValue = this.motorButtons[CODE_SHIFT] ? -255 : -150;
+    } else {
+       newValue = 0;
+    }
+
+    if (newValue !== null && newValue !== this.motor.left && newValue !== this.motor.right) {
+      this.motor.left = this.motor.right = newValue;
+      this.props.changeMotors(this.motor.left, this.motor.right);
+    }
   }
 
   render() {
@@ -102,7 +161,8 @@ Tower.propTypes = {
   towerEnabled: PropTypes.bool,
   setTowerPosition: PropTypes.func,
   toggleTowerControl: PropTypes.func,
-  changeMotors: PropTypes.func
+  changeMotors: PropTypes.func,
+  changeDirection: PropTypes.func
 };
 
 export default Tower;

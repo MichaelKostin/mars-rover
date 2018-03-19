@@ -8,7 +8,7 @@ const config = require('./config/app.json')[ENV];
 const path = require('path');
 const tempService = require('./services/temp');
 const towerService = require('./services/tower');
-const motorService = require('./services/motor');
+const chassisService = require('./services/chassis');
 
 server.listen(config.port, function() {
   console.log('Server has been started on port ', config.port);
@@ -42,7 +42,10 @@ io.on('connection', function (socket) {
         towerService.stopServos();
         break;
       case 'S_CHANGE_MOTORS':
-        motorService.changeMotors(action.left, action.right);
+        chassisService.changeMotors(action.left, action.right);
+        break;
+      case 'S_CHANGE_DIR':
+        chassisService.changeDirection(action.direction);
         break;
       default:
         console.error('Unhandled event: ', action);
