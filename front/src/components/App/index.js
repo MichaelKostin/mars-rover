@@ -2,18 +2,42 @@ import React, { Component } from 'react';
 import Temp from '../../containers/Temp';
 import Tower from '../../containers/Tower';
 import './App.css';
-import store from '../../store';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.hideImage = this.hideImage.bind(this);
+
+    this.state = {
+      showImage: true
+    }
+  }
+
+  hideImage() {
+    this.setState({ showImage: false });
+  }
+
   render() {
     return (
       <div className="App">
+        <header>
+          <div className="connection-status">
+            <div className="switcher"></div>
+            <div className="switcher"></div>
+          </div>
+        </header>
         <div className="main-screen">
           <div className="left-box">
-           [ {store.anyData}]
           </div>
-          <div className="video-box">
-            <img id="mjpeg_dest" alt="main cam" src="http://192.168.1.6/html/cam_pic_new.php?time=1507405579786&amp;pDelay=40000"/>
+          <div className={"video-box" + (this.state.showImage ? "" : " no-signal")}>
+            {
+              this.state.showImage ? (<img
+                id="mjpeg_dest"
+                alt="main cam"
+                src="http://192.168.1.6/html/cam_pic_new.php?time=1507405579786&amp;pDelay=40000"
+                onError={this.hideImage}
+              />) : (<p><span>No signal</span></p>)
+            }
           </div>
           <div className="right-box"></div>
         </div>
