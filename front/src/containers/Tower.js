@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch) => ({
   changeDirection: (dir) => dispatch(changeDirection(dir))
 });
 
-const TowerContainer = ({ towerX,  towerY, towerEnabled, toggleTowerControl, setTowerPosition, changeMotors, changeDirection })=> {
+const TowerContainer = ({ towerX, towerY, towerEnabled, toggleTowerControl, setTowerPosition, changeMotors, changeDirection })=> {
   return (
     <Tower
       towerEnabled={towerEnabled}

@@ -4,6 +4,8 @@ export const S_T_XY = 'S_T_XY';
 export const D_ANY = 'D_ANY';
 export const S_CHANGE_MOTORS = 'S_CHANGE_MOTORS';
 export const S_CHANGE_DIR = 'S_CHANGE_DIR';
+export const SOCKET_DISCONNECT = 'SOCKET_DISCONNECT';
+export const SOCKET_RECONNECT = 'SOCKET_RECONNECT';
 
 //actions
 export function setProcessorTemp(temp) {

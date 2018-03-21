@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Temp from '../../containers/Temp';
 import Tower from '../../containers/Tower';
+import Header from '../../containers/Header';
 import './App.css';
 
 class App extends Component {
@@ -20,12 +21,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header>
-          <div className="connection-status">
-            <div className="switcher"></div>
-            <div className="switcher"></div>
-          </div>
-        </header>
+        <Header />
         <div className="main-screen">
           <div className="left-box">
           </div>
@@ -39,7 +35,8 @@ class App extends Component {
               />) : (<p><span>No signal</span></p>)
             }
           </div>
-          <div className="right-box"></div>
+          <div className="right-box">
+          </div>
         </div>
         <Temp/>
         <Tower/>

@@ -3,7 +3,9 @@ import {
   S_TOWER_CTR,
   S_T_XY,
   D_ANY,
-  S_CHANGE_MOTORS
+  S_CHANGE_MOTORS,
+  SOCKET_RECONNECT,
+  SOCKET_DISCONNECT
 } from '../actions';
 
 function roverApp(state = {}, action) {
@@ -25,6 +27,10 @@ function roverApp(state = {}, action) {
       return Object.assign({}, state, { anyData: action.data });
     case S_CHANGE_MOTORS:
       return Object.assign({}, state, { leftMotors: action.left, rightMotors: action.right});
+    case SOCKET_RECONNECT:
+      return Object.assign({}, state, { websocketConnected: true });
+    case SOCKET_DISCONNECT:
+      return Object.assign({}, state, { websocketConnected: false });
     default:
       return state;
   }
