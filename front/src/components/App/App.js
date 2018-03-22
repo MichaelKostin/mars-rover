@@ -1,31 +1,30 @@
 import React, { Component } from 'react';
-import Temp from '../../containers/Temp';
-import Tower from '../../containers/Tower';
-import Header from '../../containers/Header';
+import { bool, number } from 'prop-types';
+
+import TempContainer from '../Temp/TempContainer';
+import TowerContainer from '../Tower/TowerContainer';
+import HeaderContainer from '../Header/HeaderContainer';
 import './App.css';
 
 class App extends Component {
-  constructor() {
-    super();
-    this.hideImage = this.hideImage.bind(this);
+  static propTypes = {
+    towerX: number,
+    towerY: number,
+    towerEnabled: bool
+  };
 
-    this.state = {
-      showImage: true
-    }
-  }
-
-  hideImage() {
-    this.setState({ showImage: false });
-  }
-
+  state = { showImage: true };
+  hideImage = () => this.setState({ showImage: false });
   render() {
     return (
-      <div className="App">
-        <Header />
+      <div className={"app " + (this.props.towerEnabled ? "tower-enabled" : "")}>
+        <HeaderContainer />
         <div className="main-screen">
           <div className="left-box">
           </div>
           <div className={"video-box" + (this.state.showImage ? "" : " no-signal")}>
+            <div className="x-direction degree">{this.props.towerX}</div>
+            <div className="y-direction degree">{this.props.towerY}</div>
             {
               this.state.showImage ? (<img
                 id="mjpeg_dest"
@@ -38,8 +37,8 @@ class App extends Component {
           <div className="right-box">
           </div>
         </div>
-        <Temp/>
-        <Tower/>
+        <TempContainer/>
+        <TowerContainer/>
       </div>
     );
   }

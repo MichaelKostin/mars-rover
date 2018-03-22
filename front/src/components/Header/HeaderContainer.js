@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
+import Header from './Header';
 
 const mapStateToProps = (state) => ({
   connected: state.websocketConnected,
@@ -8,14 +8,12 @@ const mapStateToProps = (state) => ({
 });
 
 
-const HeaderContainer = ({ connected, towerEnabled })=> {
-  return (
-    <Header
-      connected={connected}
-      towerEnabled={towerEnabled}
-    />
-  )
-};
+const HeaderContainer = ({ connected, towerEnabled })=> (
+  <Header
+    connected={connected}
+    towerEnabled={towerEnabled}
+  />
+);
 
 export default connect(
   mapStateToProps

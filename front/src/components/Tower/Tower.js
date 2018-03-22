@@ -143,8 +143,6 @@ class Tower extends Component {
   render() {
     return (
       <div className="temp">
-        <p>towerX: <strong>{this.props.towerX} &deg;</strong></p>
-        <p>towerY: <strong>{this.props.towerY} &deg;</strong></p>
         {
           this.props.towerEnabled ?
             (<p style={{color: 'green'}}>Mouse control enabled</p>) :

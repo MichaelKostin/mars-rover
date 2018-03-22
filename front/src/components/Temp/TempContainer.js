@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Temp from '../components/Temp';
-import { setProcessorTemp } from '../actions';
+import Temp from './Temp';
+import { setProcessorTemp } from '../../actions';
 
 const mapStateToProps = (state) => ({
   CPTemp: state.CPTemp
@@ -13,14 +13,12 @@ const mapDispatchToProps = (dispatch) => ({
     }
 });
 
-const TempContainer = ({ CPTemp, setProcessorTemp })=> {
-  return (
-    <Temp
-      CPTemp={CPTemp}
-      setCPTemp={setProcessorTemp}
-    />
-  )
-};
+const TempContainer = ({ CPTemp, setProcessorTemp })=> (
+  <Temp
+    CPTemp={CPTemp}
+    setCPTemp={setProcessorTemp}
+  />
+);
 
 export default connect(
   mapStateToProps,

@@ -1,5 +1,10 @@
 @import "../../settings.scss";
 
+.app {
+  &.tower-enabled {
+    cursor: none;
+  }
+}
 
 .main-screen {
   display: flex;
@@ -11,8 +16,23 @@
     border: 1px solid $color-default;
     width: 513px;
     height: 385px;
-    overflow: hidden;
     position: relative;
+
+    .degree {
+      position: absolute;
+      font-size: 13px;
+
+      &.x-direction {
+        bottom: -20px;
+        left: 50%;
+      }
+
+      &.y-direction {
+        left: -20px;
+        bottom: 50%;
+      }
+    }
+
 
     img {
       display: block;

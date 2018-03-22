@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Tower from '../components/Tower';
-import { toggleTowerControl, setTowerPosition, changeMotors, changeDirection } from '../actions';
+import Tower from './Tower';
+import { toggleTowerControl, setTowerPosition, changeMotors, changeDirection } from '../../actions';
 
 const mapStateToProps = (state) => ({
   towerX: state.towerX,
