@@ -7,6 +7,7 @@ export const S_CHANGE_DIR = 'S_CHANGE_DIR';
 export const SOCKET_DISCONNECT = 'SOCKET_DISCONNECT';
 export const SOCKET_RECONNECT = 'SOCKET_RECONNECT';
 export const SOCKET_CONNECT = 'SOCKET_CONNECT';
+export const IMU_UPDATE = 'IMU_UPDATE';
 
 //actions
 export function setProcessorTemp(temp) {

@@ -6,7 +6,8 @@ import {
   S_CHANGE_MOTORS,
   SOCKET_RECONNECT,
   SOCKET_DISCONNECT,
-  SOCKET_CONNECT
+  SOCKET_CONNECT,
+  IMU_UPDATE
 } from '../actions';
 
 function roverApp(state = {}, action) {
@@ -33,6 +34,8 @@ function roverApp(state = {}, action) {
       return Object.assign({}, state, { websocketConnected: true });
     case SOCKET_DISCONNECT:
       return Object.assign({}, state, { websocketConnected: false });
+    case IMU_UPDATE:
+      return Object.assign({}, state, { accelerometer: { ...action.data.accelerometer }});
     default:
       return state;
   }

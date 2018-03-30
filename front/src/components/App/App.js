@@ -16,6 +16,14 @@ class App extends Component {
   state = { showImage: true };
   hideImage = () => this.setState({ showImage: false });
   render() {
+    const xStyles = {
+      left: (this.props.towerX *.55) + '%'
+    };
+
+    const yStyles = {
+      top: (this.props.towerY *.55) + '%'
+    };
+
     return (
       <div className={"app " + (this.props.towerEnabled ? "tower-enabled" : "")}>
         <HeaderContainer />
@@ -23,8 +31,8 @@ class App extends Component {
           <div className="left-box">
           </div>
           <div className={"video-box" + (this.state.showImage ? "" : " no-signal")}>
-            <div className="x-direction degree">{this.props.towerX}</div>
-            <div className="y-direction degree">{this.props.towerY}</div>
+            <div className="x-direction degree" style={xStyles}>{this.props.towerX}</div>
+            <div className="y-direction degree" style={yStyles}>{this.props.towerY}</div>
             {
               this.state.showImage ? (<img
                 id="mjpeg_dest"

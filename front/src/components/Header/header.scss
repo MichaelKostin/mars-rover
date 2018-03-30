@@ -110,4 +110,59 @@ header {
       }
     }
   }
+
+  .imu {
+    padding-left: 50px;
+    #imuContainer {
+      #imuCube {
+        width: 50px;
+        height: 50px;
+        perspective: 550px;
+        transform-style: preserve-3d;
+        transform: rotate3d(1, 1, 1, 45deg);
+
+        .front {
+          background: rgba(90,90,90,.7);
+          transform: translateZ(25px);
+        }
+
+        .back {
+          background: rgba(0,210,0,.7);
+          transform: rotateY(180deg) translateZ(25px);
+        }
+
+        .right {
+          background: rgba(210,0,0,.7);
+          transform: rotateY(90deg) translateZ(25px);
+        }
+
+        .left {
+          background: rgba(0,0,210,.7);
+          transform: rotateY(-90deg) translateZ(25px);
+        }
+
+        .top {
+          background: rgba(210,210,0,.7);
+          transform: rotateX(90deg) translateZ(25px);
+        }
+
+        .bottom {
+          background: rgba(210,0,210,.7);
+          transform: rotateX(-90deg) translateZ(25px);
+        }
+
+        & > .side {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          backface-visibility: inherit;
+          font-size: 60px;
+          color: #fff;
+        }
+      }
+    }
+  }
 }

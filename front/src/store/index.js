@@ -35,7 +35,12 @@ const store = configureStore({
   towerX: 90,
   towerY: 90,
   leftMotors: 0,
-  rightMotors: 0
+  rightMotors: 0,
+  accelerometer: {
+    x: 0,
+    y: 0,
+    z: 0
+  }
 });
 
 export default store;

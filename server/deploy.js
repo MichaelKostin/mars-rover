@@ -28,7 +28,7 @@ if (!config.host || !config.username || !config.password) {
 
 ssh.connect(config)
   .then(() => deployDirectory(SERVER_DIR, REMOTE_WORK_DIR))
-  .then(() => deployDirectory(FRONT_DIR, `${REMOTE_WORK_DIR}/static`))
+  //.then(() => deployDirectory(FRONT_DIR, `${REMOTE_WORK_DIR}/static`))
   .then(() => execCommand('npm i'))
   .then(() => execWithStream('NODE_ENV=production npm start'))
   .catch((err) => logger.error(err));

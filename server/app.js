@@ -9,6 +9,7 @@ const path = require('path');
 const tempService = require('./services/temp');
 const towerService = require('./services/tower');
 const chassisService = require('./services/chassis');
+const imuService = require('./services/gy-87');
 
 server.listen(config.port, function() {
   console.log('Server has been started on port ', config.port);
@@ -23,6 +24,8 @@ app.get('/ping', function(req, res) {
 });
 
 io.on('connection', function (socket) {
+  console.log('ws connected');
+
   tempService.run((err, temp) => {
     if (err) {
       console.error(err);
@@ -30,6 +33,10 @@ io.on('connection', function (socket) {
       socket.emit('action', { type: 'CHANGE_TEMP_CP', temp });
     }
   });
+
+  //imuService.subscribe((data) => {
+  //  socket.emit('action', { type: 'IMU_UPDATE', data });
+  //});
 
   socket.on('action', function (action) {
     switch (action.type) {
