@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { bool, number } from 'prop-types';
+import { connect } from 'react-redux';
 
 import TempContainer from '../Temp/TempContainer';
-import TowerContainer from '../Tower/TowerContainer';
+import Tower from '../Tower/Tower';
 import HeaderContainer from '../Header/HeaderContainer';
 import './App.css';
 
@@ -10,34 +11,44 @@ class App extends Component {
   static propTypes = {
     towerX: number,
     towerY: number,
-    towerEnabled: bool
+    towerEnabled: bool,
+    distance: number
   };
 
   state = { showImage: true };
   hideImage = () => this.setState({ showImage: false });
   render() {
     const xStyles = {
-      left: (this.props.towerX *.55) + '%'
+      marginLeft: `${this.props.towerX *.55/3}%`
     };
 
     const yStyles = {
-      top: (this.props.towerY *.55) + '%'
+      marginTop: `-${this.props.towerY *.55*2}%`
     };
 
     return (
       <div className={"app " + (this.props.towerEnabled ? "tower-enabled" : "")}>
         <HeaderContainer />
+        <div className="top-buttons">
+          <i className="fas fa-camera-retro"></i>
+          <i className="fas fa-moon"></i>
+        </div>
         <div className="main-screen">
           <div className="left-box">
           </div>
           <div className={"video-box" + (this.state.showImage ? "" : " no-signal")}>
-            <div className="x-direction degree" style={xStyles}>{this.props.towerX}</div>
-            <div className="y-direction degree" style={yStyles}>{this.props.towerY}</div>
+            <div className="distance-container">
+              <span className="top"/>
+              <span className="bottom"/>
+              <span className="value">{this.props.distance} sm</span>
+            </div>
+            <div className="x-direction degree"><span>{this.props.towerX - 90}</span><div style={xStyles}></div></div>
+            <div className="y-direction degree"><span>{this.props.towerY - 90}</span><div style={yStyles}></div></div>
             {
               this.state.showImage ? (<img
                 id="mjpeg_dest"
                 alt="main cam"
-                src="http://192.168.1.6/html/cam_pic_new.php?time=1507405579786&amp;pDelay=40000"
+                src={`http://${process.env.REACT_APP_API_HOST}/html/cam_pic_new.php?time=1507405579786&amp;pDelay=40000`}
                 onError={this.hideImage}
               />) : (<p><span>No signal</span></p>)
             }
@@ -46,10 +57,17 @@ class App extends Component {
           </div>
         </div>
         <TempContainer/>
-        <TowerContainer/>
+        <Tower/>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  towerX: state.towerX,
+  towerY: state.towerY,
+  towerEnabled: state.towerEnabled,
+  distance: state.distance
+});
+
+export default connect(mapStateToProps)(App);

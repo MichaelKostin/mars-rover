@@ -7,7 +7,8 @@ import {
   SOCKET_RECONNECT,
   SOCKET_DISCONNECT,
   SOCKET_CONNECT,
-  IMU_UPDATE
+  IMU_UPDATE,
+  DISTANCE_NEW
 } from '../actions';
 
 function roverApp(state = {}, action) {
@@ -36,6 +37,8 @@ function roverApp(state = {}, action) {
       return Object.assign({}, state, { websocketConnected: false });
     case IMU_UPDATE:
       return Object.assign({}, state, { accelerometer: { ...action.data.accelerometer }});
+    case DISTANCE_NEW:
+      return Object.assign({}, state, { distance: action.data.distance });
     default:
       return state;
   }

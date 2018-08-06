@@ -1,0 +1,29 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "websocket server ",
+  "main": "app.js",
+  "scripts": {
+    "start": "NODE_ENV=production sudo node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "node deploy.js"
+  },
+  "author": "Mikhail Kostin",
+  "license": "MIT",
+  "repository": "https://github.com/MichaelKostin/mars-rover.git",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.0",
+    "johnny-five": "^0.14.3",
+    "kalmanjs": "^1.0.0-beta",
+    "nrf": "^0.8.3",
+    "pi-temperature": "^2.0.0",
+    "raspi-io": "8.1.0",
+    "socket.io": "^2.0.3",
+    "node-ads1x15": "git+https://github.com/AuspeXeu/node-ads1x15.git"
+  },
+  "devDependencies": {
+    "node-ssh": "^5.0.0",
+    "winston": "^2.3.1"
+  }
+}

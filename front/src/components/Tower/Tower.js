@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import * as PropTypes from 'prop-types';
 import { throttle } from 'lodash';
+import { connect } from 'react-redux';
+import { toggleTowerControl, setTowerPosition, changeMotors, changeDirection } from '../../actions';
+
+import './style.css';
 
 const CODE_B = 66;
 const CODE_FORWARD = 87;
@@ -143,6 +147,7 @@ class Tower extends Component {
   render() {
     return (
       <div className="temp">
+        <div>distance: {this.props.distance} sm</div>
         {
           this.props.towerEnabled ?
             (<p style={{color: 'green'}}>Mouse control enabled</p>) :
@@ -159,8 +164,26 @@ Tower.propTypes = {
   towerEnabled: PropTypes.bool,
   setTowerPosition: PropTypes.func,
   toggleTowerControl: PropTypes.func,
+  distance: PropTypes.number,
   changeMotors: PropTypes.func,
   changeDirection: PropTypes.func
 };
 
-export default Tower;
+const mapStateToProps = (state) => ({
+  towerX: state.towerX,
+  towerY: state.towerY,
+  towerEnabled: state.towerEnabled,
+  distance: state.distance
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  toggleTowerControl: (enabled) => dispatch(toggleTowerControl(enabled)),
+  setTowerPosition: (x, y) => dispatch(setTowerPosition(x, y)),
+  changeMotors: (left, right) => dispatch(changeMotors(left, right)),
+  changeDirection: (dir) => dispatch(changeDirection(dir))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Tower);

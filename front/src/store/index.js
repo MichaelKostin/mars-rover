@@ -4,7 +4,7 @@ import roverApp from '../reducers';
 import createSocketIoMiddleware from 'redux-socket.io';
 import io from 'socket.io-client';
 import { SOCKET_DISCONNECT, SOCKET_RECONNECT, SOCKET_CONNECT } from '../actions';
-let socket = io('http://192.168.1.6:8080');
+let socket = io(`http://${process.env.REACT_APP_API_HOST}:8080`);
 let socketIoMiddleware = createSocketIoMiddleware(socket, 'S_');
 
 socket.on('connect_timeout', () => store.dispatch({ type: SOCKET_DISCONNECT }));
@@ -36,6 +36,7 @@ const store = configureStore({
   towerY: 90,
   leftMotors: 0,
   rightMotors: 0,
+  distance:0,
   accelerometer: {
     x: 0,
     y: 0,

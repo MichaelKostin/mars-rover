@@ -10,13 +10,14 @@ const tempService = require('./services/temp');
 const towerService = require('./services/tower');
 const chassisService = require('./services/chassis');
 const imuService = require('./services/gy-87');
+const distanceService = require('./services/distance');
 
 server.listen(config.port, function() {
   console.log('Server has been started on port ', config.port);
 });
 
 app.use(bodyParser.json());
-app.use('/', express.static(path.resolve(__dirname, config.static)));
+app.use(express.static(path.resolve(__dirname, config.static)));
 
 app.get('/ping', function(req, res) {
   console.log('ping');
@@ -37,6 +38,10 @@ io.on('connection', function (socket) {
   //imuService.subscribe((data) => {
   //  socket.emit('action', { type: 'IMU_UPDATE', data });
   //});
+
+  distanceService.onData((data) => {
+    socket.emit('action', { type: 'DISTANCE_NEW', data });
+  });
 
   socket.on('action', function (action) {
     switch (action.type) {
@@ -61,6 +66,7 @@ io.on('connection', function (socket) {
 
   socket.on('disconnect', function () {
     tempService.stop();
+    distanceService.off();
     io.emit('user disconnected');
   });
 
