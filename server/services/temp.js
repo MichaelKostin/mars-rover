@@ -1,39 +1,19 @@
 const temp = require('pi-temperature');
 let timeInterval = null;
 let delay = 5000;
-let callbackFunc = null;
+const defaultCallback = () => { console.log('Callback is not specified')};
 
 module.exports = {
-  run,
-  stop,
-  setDelay
+  onData,
+  off
 };
 
-function run(callback) {
-  if (typeof callback !== 'function') {
-    console.error('Temp can not be provided');
-    return;
-  }
-
-  if (process.platform !== 'linux') {
-    console.info('Board is not detected');
-    return;
-  }
-
-  callbackFunc = callback;
+function onData(callback = defaultCallback) {
   timeInterval = setInterval(() => {
-    temp.measure(callbackFunc);
+    temp.measure(callback);
   }, delay);
 }
 
-function stop() {
+function off() {
   clearInterval(timeInterval);
-}
-
-function setDelay(newDelay) {
-  delay = newDelay;
-  if (timeInterval) {
-    stop();
-    run(callbackFunc);
-  }
 }

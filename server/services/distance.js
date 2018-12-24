@@ -1,5 +1,6 @@
 const board = require('./board');
 const five = require('johnny-five');
+const Fn = require('johnny-five').Fn;
 
 let sensor = null;
 let virtual = null;
@@ -33,7 +34,7 @@ function onData(callback) {
     }
 
     const distance = getDistanceFromVoltage(data /1000);
-    callback({ distance });
+    callback(Fn.toFixed(distance, 2));
   });
 }
 

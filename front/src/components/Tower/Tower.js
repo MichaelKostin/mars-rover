@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import * as PropTypes from 'prop-types';
 import { throttle } from 'lodash';
 import { connect } from 'react-redux';
@@ -17,7 +17,7 @@ const DIR_LEFT = 1;
 const DIR_RIGHT = 2;
 const DIR_STRAIGHT = 0;
 
-class Tower extends Component {
+class Tower extends PureComponent {
   constructor(props) {
     super(props);
     this.onMouseMove = this.onMouseMove.bind(this);
@@ -64,7 +64,7 @@ class Tower extends Component {
 
   keyDown(event) {
     if (event.keyCode === CODE_B) {
-      this.props.toggleTowerControl(!this.props.towerEnabled);
+      this.props.toggleTowerControl(this.props.towerEnabled === 0 ? 1 : 0 );
       return;
     }
 
@@ -147,7 +147,6 @@ class Tower extends Component {
   render() {
     return (
       <div className="temp">
-        <div>distance: {this.props.distance} sm</div>
         {
           this.props.towerEnabled ?
             (<p style={{color: 'green'}}>Mouse control enabled</p>) :
@@ -161,7 +160,7 @@ class Tower extends Component {
 Tower.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
-  towerEnabled: PropTypes.bool,
+  towerEnabled: PropTypes.number,
   setTowerPosition: PropTypes.func,
   toggleTowerControl: PropTypes.func,
   distance: PropTypes.number,
@@ -170,10 +169,10 @@ Tower.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  towerX: state.towerX,
-  towerY: state.towerY,
-  towerEnabled: state.towerEnabled,
-  distance: state.distance
+  towerX: state.toRover.towerX,
+  towerY: state.toRover.towerY,
+  towerEnabled: state.toRover.towerEnabled,
+  distance: state.fromRover.distance
 });
 
 const mapDispatchToProps = (dispatch) => ({

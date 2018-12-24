@@ -1,9 +1,11 @@
 import React from 'react';
-import { bool } from 'prop-types';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import WifiIcon from '../icons/WifiIcon';
 
 import './header.css'
 
-const Header = ({connected, towerEnabled, accelerometer }) => {
+const Header = ({connected, towerEnabled, accelerometer, wifiQuality }) => {
   const accelerometerStyles = {
     transform: `rotateX(${accelerometer.x * 90}deg) rotateY(${accelerometer.y * 90}deg) rotateZ(${accelerometer.z * 90}deg)`
   };
@@ -15,6 +17,9 @@ const Header = ({connected, towerEnabled, accelerometer }) => {
       </div>
       <div className={"tower " + (towerEnabled ? "enabled" : "")}>
         <div className="tower-icon"></div>
+      </div>
+      <div className="wifi">
+        <WifiIcon quality={wifiQuality} />
       </div>
 
       <div className="imu">
@@ -32,10 +37,21 @@ const Header = ({connected, towerEnabled, accelerometer }) => {
     </header>
   );
 }
+const mapStateToProps = (state) => ({
+  connected: state.websocketConnected,
+  towerEnabled: state.toRover.towerEnabled,
+  accelerometer: state.accelerometer,
+  wifiQuality: state.fromRover.wifiQuality
+});
+
 
 Header.propTypes = {
-  connected: bool,
-  towerEnabled: bool
+  connected: PropTypes.bool.isRequired,
+  towerEnabled: PropTypes.number.isRequired,
+  wifiQuality: PropTypes.number.isRequired
 };
 
-export default Header;
+export default connect(
+  mapStateToProps
+)(Header);
+

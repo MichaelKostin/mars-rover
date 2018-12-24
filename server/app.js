@@ -7,10 +7,12 @@ const ENV = process.env.NODE_ENV || 'development';
 const config = require('./config/app.json')[ENV];
 const path = require('path');
 const tempService = require('./services/temp');
+const wifiService = require('./services/wifi');
 const towerService = require('./services/tower');
 const chassisService = require('./services/chassis');
 const imuService = require('./services/gy-87');
 const distanceService = require('./services/distance');
+require('./services/power')
 
 server.listen(config.port, function() {
   console.log('Server has been started on port ', config.port);
@@ -26,47 +28,57 @@ app.get('/ping', function(req, res) {
 
 io.on('connection', function (socket) {
   console.log('ws connected');
+  let fromFront = {
+    towerEnabled: 0,
+    towerX: 90,
+    towerY: 90,
+    leftMotors: 0,
+    rightMotors: 0,
+    direction: 0
+  };
 
-  tempService.run((err, temp) => {
-    if (err) {
-      console.error(err);
-    } else {
-      socket.emit('action', { type: 'CHANGE_TEMP_CP', temp });
-    }
+  let toFront = {
+    CPTemp: 16,
+    distance: 0,
+    wifiQuality: 100
+  };
+
+  const dataSendInterval = setInterval(() => {
+    socket.emit('a', Object.values(toFront));
+  }, 400);
+
+  tempService.onData((err, temp) => {
+    toFront.CPTemp = temp;
   });
 
-  //imuService.subscribe((data) => {
-  //  socket.emit('action', { type: 'IMU_UPDATE', data });
-  //});
-
-  distanceService.onData((data) => {
-    socket.emit('action', { type: 'DISTANCE_NEW', data });
+  distanceService.onData((distance) => {
+    toFront.distance = distance;
   });
 
-  socket.on('action', function (action) {
-    switch (action.type) {
-      case 'S_T_XY':
-        towerService.changePositionX(action.x);
-        towerService.changePositionY(action.y);
-       // socket.emit('action', { type: `||||||:${action.type}`, degree: action.degree });
-        break;
-      case 'S_TOWER_CTR':
-        towerService.stopServos();
-        break;
-      case 'S_CHANGE_MOTORS':
-        chassisService.changeMotors(action.left, action.right);
-        break;
-      case 'S_CHANGE_DIR':
-        chassisService.changeDirection(action.direction);
-        break;
-      default:
-        console.error('Unhandled event: ', action);
-    }
+  wifiService.onData((percentage) => {
+    toFront.wifiQuality = percentage;
+  });
+
+  socket.on('a', function(dataArr) {
+    const [
+      towerEnabled,
+      towerX,
+      towerY,
+      leftMotors,
+      rightMotors,
+      direction
+    ] = dataArr;
+    towerService.changePositionX(towerX);
+    towerService.changePositionY(towerY);
+    towerService.changeServosState(towerEnabled);
+    chassisService.changeMotors(leftMotors, rightMotors);
+    chassisService.changeDirection(direction);
   });
 
   socket.on('disconnect', function () {
-    tempService.stop();
+    tempService.off();
     distanceService.off();
+    clearInterval(dataSendInterval);
     io.emit('user disconnected');
   });
 

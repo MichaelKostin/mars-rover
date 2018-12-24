@@ -4,7 +4,7 @@ import Temp from './Temp';
 import { setProcessorTemp } from '../../actions';
 
 const mapStateToProps = (state) => ({
-  CPTemp: state.CPTemp
+  CPTemp: state.fromRover.CPTemp
 });
 
 const mapDispatchToProps = (dispatch) => ({

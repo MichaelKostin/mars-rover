@@ -1,44 +1,61 @@
 import {
-  CHANGE_TEMP_CP,
   S_TOWER_CTR,
   S_T_XY,
-  D_ANY,
+  S_CHANGE_DIR,
   S_CHANGE_MOTORS,
   SOCKET_RECONNECT,
   SOCKET_DISCONNECT,
   SOCKET_CONNECT,
-  IMU_UPDATE,
-  DISTANCE_NEW
+  DATA_FROM_ROVER
 } from '../actions';
 
-function roverApp(state = {}, action) {
+const initialState = {
+  websocketConnected: false,
+  accelerometer: {
+    x: 0,
+    y: 0,
+    z: 0
+  },
+  fromRover: {
+    CPTemp: 16,
+    distance: 16,
+    wifiQuality: 100
+  },
+  toRover: {
+    towerEnabled: 0,
+    towerX: 90,
+    towerY: 90,
+    leftMotors: 0,
+    rightMotors: 0,
+    direction: 0
+  }
+};
+
+function roverApp(state = initialState, action) {
   switch (action.type) {
-    case CHANGE_TEMP_CP:
-      return Object.assign({}, state, {
-        CPTemp: action.temp
-      });
     case S_TOWER_CTR:
       return Object.assign({}, state, {
-        towerEnabled: action.enabled
+        toRover: { ...state.toRover, towerEnabled: action.enabled }
       });
     case S_T_XY:
       return Object.assign({}, state, {
-        towerX: action.x,
-        towerY: action.y
+        toRover: {...state.toRover, towerX: action.x, towerY: action.y }
       });
-    case D_ANY:
-      return Object.assign({}, state, { anyData: action.data });
     case S_CHANGE_MOTORS:
-      return Object.assign({}, state, { leftMotors: action.left, rightMotors: action.right});
+      return Object.assign({}, state, {
+        toRover: {...state.toRover, leftMotors: action.left, rightMotors: action.right }
+      });
     case SOCKET_RECONNECT:
     case SOCKET_CONNECT:
       return Object.assign({}, state, { websocketConnected: true });
     case SOCKET_DISCONNECT:
       return Object.assign({}, state, { websocketConnected: false });
-    case IMU_UPDATE:
-      return Object.assign({}, state, { accelerometer: { ...action.data.accelerometer }});
-    case DISTANCE_NEW:
-      return Object.assign({}, state, { distance: action.data.distance });
+    case DATA_FROM_ROVER:
+      return Object.assign({}, state, { fromRover: action.data });
+    case S_CHANGE_DIR:
+      return Object.assign({}, state, {
+        toRover: {...state.toRover, direction: action.direction }
+      });
     default:
       return state;
   }

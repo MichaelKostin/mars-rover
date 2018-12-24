@@ -5,11 +5,12 @@ let yServo;
 
 let currentX = null;
 let currentY = null;
+let enabled = false;
 
 module.exports = {
   changePositionX,
   changePositionY,
-  stopServos
+  changeServosState
 };
 
 board.on('ready', () => {
@@ -25,10 +26,20 @@ board.on('ready', () => {
     pin: 1,
     invert: true
   });
+
+  const animation = new five.Animation(yServo);
+
+  animation.enqueue({
+    duration: 2000,
+    cuePoints: [0, 0.25, 0.75, 1.0],
+    keyFrames: [ {degrees: 90}, {degrees: 135}, {degrees: 45}, {degrees: 90}]
+  });
+
+  goToStart();
 });
 
 board.on('exit', () => {
-  stopServos();
+  changeServosState(false);
 });
 
 function changePositionY(y) {
@@ -49,7 +60,16 @@ function changePositionX(x) {
   currentX = x;
 }
 
-function stopServos() {
-  xServo.stop();
-  yServo.stop();
+function changeServosState(enable = false) {
+  if (enabled && !enable) {
+    enabled = false;
+    xServo.stop();
+    yServo.stop();
+  } else if (!enabled && enable) {
+    enabled = true;
+  }
+}
+
+function goToStart() {
+
 }

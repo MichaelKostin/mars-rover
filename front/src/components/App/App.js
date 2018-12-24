@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 
 import TempContainer from '../Temp/TempContainer';
 import Tower from '../Tower/Tower';
-import HeaderContainer from '../Header/HeaderContainer';
+import Header from '../Header/Header';
 import './App.css';
 
 class App extends Component {
   static propTypes = {
-    towerX: number,
-    towerY: number,
-    towerEnabled: bool,
+    towerX: number.isRequired,
+    towerY: number.isRequired,
+    towerEnabled: number.isRequired,
     distance: number
   };
 
@@ -28,10 +28,10 @@ class App extends Component {
 
     return (
       <div className={"app " + (this.props.towerEnabled ? "tower-enabled" : "")}>
-        <HeaderContainer />
+        <Header/>
         <div className="top-buttons">
-          <i className="fas fa-camera-retro"></i>
-          <i className="fas fa-moon"></i>
+          <i className="fas fa-camera-retro"/>
+          <i className="fas fa-moon"/>
         </div>
         <div className="main-screen">
           <div className="left-box">
@@ -42,8 +42,12 @@ class App extends Component {
               <span className="bottom"/>
               <span className="value">{this.props.distance} sm</span>
             </div>
-            <div className="x-direction degree"><span>{this.props.towerX - 90}</span><div style={xStyles}></div></div>
-            <div className="y-direction degree"><span>{this.props.towerY - 90}</span><div style={yStyles}></div></div>
+            <div className="x-direction degree">
+              <span>{this.props.towerX - 90}</span><div style={xStyles}/>
+            </div>
+            <div className="y-direction degree">
+              <span>{this.props.towerY - 90}</span><div style={yStyles}/>
+            </div>
             {
               this.state.showImage ? (<img
                 id="mjpeg_dest"
@@ -64,10 +68,10 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  towerX: state.towerX,
-  towerY: state.towerY,
-  towerEnabled: state.towerEnabled,
-  distance: state.distance
+  towerX: state.toRover.towerX,
+  towerY: state.toRover.towerY,
+  towerEnabled: state.toRover.towerEnabled,
+  distance: state.fromRover.distance
 });
 
 export default connect(mapStateToProps)(App);

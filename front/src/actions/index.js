@@ -9,6 +9,7 @@ export const SOCKET_RECONNECT = 'SOCKET_RECONNECT';
 export const SOCKET_CONNECT = 'SOCKET_CONNECT';
 export const IMU_UPDATE = 'IMU_UPDATE';
 export const DISTANCE_NEW = 'DISTANCE_NEW';
+export const DATA_FROM_ROVER = 'DATA_FROM_ROVER';
 
 //actions
 export function setProcessorTemp(temp) {
