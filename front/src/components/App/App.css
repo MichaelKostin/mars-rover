@@ -78,14 +78,16 @@
       position: absolute;
       font-size: 12px;
       color: #222222;
-      border-radius: 2px; }
+      border-radius: 2px;
+      transform-style: preserve-3d;
+      perspective: 500px; }
       .main-screen .video-box .degree span {
         position: absolute; }
       .main-screen .video-box .degree.x-direction {
         bottom: -33px;
         color: #d6f6e9;
         text-align: center;
-        width: calc(100% + 2px);
+        width: 514px;
         margin-left: -1px;
         height: 32px;
         overflow: hidden; }

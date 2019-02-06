@@ -10,9 +10,9 @@ const tempService = require('./services/temp');
 const wifiService = require('./services/wifi');
 const towerService = require('./services/tower');
 const chassisService = require('./services/chassis');
-const imuService = require('./services/gy-87');
+const imuService = require('./services/imu');
 const distanceService = require('./services/distance');
-require('./services/power')
+require('./services/geiger');
 
 server.listen(config.port, function() {
   console.log('Server has been started on port ', config.port);
@@ -40,12 +40,26 @@ io.on('connection', function (socket) {
   let toFront = {
     CPTemp: 16,
     distance: 0,
-    wifiQuality: 100
+    wifiQuality: 100,
+    //MPU6050
+    accelerometerX: 0,
+    accelerometerY: 0,
+    accelerometerZ: 0,
+    gyroPitch: 0,
+    gyroRoll: 0,
+    gyroYaw: 0,
+
+    // BMP180
+    barometerPressure: 0,
+    altimeterMeters: 0,
+    thermometer: 0,
+    //HMC5883L
+    compass: 0
   };
 
   const dataSendInterval = setInterval(() => {
     socket.emit('a', Object.values(toFront));
-  }, 400);
+  }, 250);
 
   tempService.onData((err, temp) => {
     toFront.CPTemp = temp;
@@ -57,6 +71,10 @@ io.on('connection', function (socket) {
 
   wifiService.onData((percentage) => {
     toFront.wifiQuality = percentage;
+  });
+
+  imuService.onData((imuData)=> {
+    toFront = { ...toFront, ...imuData };
   });
 
   socket.on('a', function(dataArr) {
@@ -81,5 +99,8 @@ io.on('connection', function (socket) {
     clearInterval(dataSendInterval);
     io.emit('user disconnected');
   });
+  socket.on('error', () => {
+    console.log('ws error')
+  })
 
 });

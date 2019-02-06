@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import TempContainer from '../Temp/TempContainer';
 import Tower from '../Tower/Tower';
 import Header from '../Header/Header';
+import Video from './Video';
 import './App.css';
 
 class App extends Component {
@@ -48,14 +49,15 @@ class App extends Component {
             <div className="y-direction degree">
               <span>{this.props.towerY - 90}</span><div style={yStyles}/>
             </div>
-            {
-              this.state.showImage ? (<img
-                id="mjpeg_dest"
-                alt="main cam"
-                src={`http://${process.env.REACT_APP_API_HOST}/html/cam_pic_new.php?time=1507405579786&amp;pDelay=40000`}
-                onError={this.hideImage}
-              />) : (<p><span>No signal</span></p>)
-            }
+            {/*{*/}
+              {/*this.state.showImage ? (<img*/}
+                {/*id="mjpeg_dest"*/}
+                {/*alt="main cam"*/}
+                {/*src={`http://${process.env.REACT_APP_API_HOST}/html/cam_pic_new.php?time=1507405579786&amp;pDelay=40000`}*/}
+                {/*onError={this.hideImage}*/}
+              {/*/>) : (<p><span>No signal</span></p>)*/}
+            {/*}*/}
+            <Video />
           </div>
           <div className="right-box">
           </div>

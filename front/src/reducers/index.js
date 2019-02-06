@@ -18,8 +18,22 @@ const initialState = {
   },
   fromRover: {
     CPTemp: 16,
-    distance: 16,
-    wifiQuality: 100
+    distance: 0,
+    wifiQuality: 100,
+    //MPU6050
+    accelerometerX: 0,
+    accelerometerY: 0,
+    accelerometerZ: 0,
+    gyroPitch: 0,
+    gyroRoll: 0,
+    gyroYaw: 0,
+
+    // BMP180
+    barometerPressure: 0,
+    altimeterMeters: 0,
+    thermometer: 0,
+    //HMC5883L
+    compass: 0
   },
   toRover: {
     towerEnabled: 0,

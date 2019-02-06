@@ -15,8 +15,36 @@ function createSocketMiddleware(socket, prefix) {
 
   return (store) => {
     socket.on('a', (data) => {
-      const [CPTemp, distance, wifiQuality] = data;
-      store.dispatch({ type: DATA_FROM_ROVER, data: { CPTemp, distance, wifiQuality } });
+      const [
+        CPTemp,
+        distance,
+        wifiQuality,
+        accelerometerX,
+        accelerometerY,
+        accelerometerZ,
+        gyroPitch,
+        gyroRoll,
+        gyroYaw,
+        barometerPressure,
+        altimeterMeters,
+        thermometer,
+        compass
+      ] = data;
+      store.dispatch({ type: DATA_FROM_ROVER, data: {
+          CPTemp,
+          distance,
+          wifiQuality,
+          accelerometerX,
+          accelerometerY,
+          accelerometerZ,
+          gyroPitch,
+          gyroRoll,
+          gyroYaw,
+          barometerPressure,
+          altimeterMeters,
+          thermometer,
+          compass
+        } });
     });
     return (next) => action => {
       const res = next(action);
